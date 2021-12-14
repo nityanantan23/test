@@ -49,6 +49,8 @@ fastify.get("/", function(request, reply) {
   // If someone clicked the option for a random color it'll be passed in the querystring
   if (otp) {
     const fs = require("fs");
+    const CryptoJS = require("crypto-js");
+
     const attendance = require("./src/packages/attendance");
     const account = require("./src/packages/account");
 
@@ -58,7 +60,13 @@ fastify.get("/", function(request, reply) {
 
       for (let i = 0; i < credentials.length; i++) {
         const { username, password } = credentials[i];
-
+        var encryptedAES = CryptoJS.AES.encrypt(password, process.env.SECRET);
+        console.log(encryptedAES);
+        var decryptedBytes = CryptoJS.AES.decrypt(
+          encryptedAES,
+          process.env.SECRET
+        );
+        var plaintext = decryptedBytes.toString(CryptoJS.enc.Utf8);
         const targetId = await account.tgt({
           username,
           password

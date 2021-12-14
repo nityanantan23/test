@@ -1,5 +1,7 @@
 dependencies:
   axios: 0.24.0
+  crypto-js: 4.1.1
+  cryptojs: 2.5.3
   fastify: 3.24.1
   fastify-formbody: 5.2.0
   fastify-static: 4.5.0
@@ -98,6 +100,14 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==
+  /crypto-js/4.1.1:
+    dev: false
+    resolution:
+      integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
+  /cryptojs/2.5.3:
+    dev: false
+    resolution:
+      integrity: sha1-kJVH7PFbrEVuJ1RZs58u9F1/y7k=
   /debug/2.6.9:
     dependencies:
       ms: 2.0.0
@@ -717,6 +727,8 @@ shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
   axios: ^0.24.0
+  crypto-js: ^4.1.1
+  cryptojs: ^2.5.3
   fastify: ^3.24.1
   fastify-formbody: ^5.2.0
   fastify-static: ^4.5.0
