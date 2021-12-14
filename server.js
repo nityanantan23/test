@@ -70,8 +70,7 @@ fastify.get("/", function(request, reply) {
 
         const updateattend = await attendance.attend({ serviceId, otp });
 
-        console.log("Step 3: " + updateattend.data );
-
+        console.log("Step 3: " + updateattend.data);
 
         // The Handlebars code will be able to access the parameter values and build them into the page
 
@@ -81,8 +80,7 @@ fastify.get("/", function(request, reply) {
             status: updateattend.errors[0].message
           };
           console.log("boom " + params.status);
-
-          arr.push(params.status);
+          reply.view("/src/pages/index.hbs", params);
         } else {
           // msg.reply(
           //   `${updateattend.data.updateAttendance.id} attended ${updateattend.data.updateAttendance.classcode} on ${updateattend.data.updateAttendance.startTime}-${updateattend.data.updateAttendance.endTime}`
@@ -93,13 +91,13 @@ fastify.get("/", function(request, reply) {
           console.log(
             `${updateattend.data.updateAttendance.id} attended ${updateattend.data.updateAttendance.classcode} on ${updateattend.data.updateAttendance.startTime}-${updateattend.data.updateAttendance.endTime}`
           );
-          arr.push(params.status);
+          reply.view("/src/pages/index.hbs", params);
         }
       }
     })();
   }
-  console.log("lol "+params)
-  reply.view("/src/pages/index.hbs", params);
+  console.log("lol " + arr[0]);
+  reply.view("/src/pages/index.hbs", arr[0]);
 });
 
 /**
