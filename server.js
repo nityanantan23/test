@@ -62,24 +62,26 @@ fastify.get("/", function(request, reply) {
         const { username, password } = credentials[i];
         // var encryptedAES = CryptoJS.AES.encrypt(username, process.env.SECRET);
         // console.log(encryptedAES.toString());
-        const decryptedPassword = CryptoJS.AES.decrypt(
+        const decryptedPassword = await CryptoJS.AES.decrypt(
           password,
           process.env.SECRET
         );
-        const plainPassword = decryptedPassword.toString(CryptoJS.enc.Utf8);
-        console.log(plainPassword)
-        const decryptedUsername = CryptoJS.AES.decrypt(
+        const plainPassword = await decryptedPassword.toString(
+          CryptoJS.enc.Utf8
+        );
+        const decryptedUsername = await CryptoJS.AES.decrypt(
           username,
           process.env.SECRET
         );
-        const plainUsername = decryptedUsername.toString(CryptoJS.enc.Utf8);
-        console.log(plainUsername)
+        const plainUsername = await decryptedUsername.toString(
+          CryptoJS.enc.Utf8
+        );
 
         const targetId = await account.tgt({
-          plainUsername,
-          plainPassword
+          username: plainUsername,
+          password: plainPassword
         });
-        console.log("Step 1: " + targetId);
+        console.log(targetId);
         const serviceId = await account.st(targetId);
 
         console.log("Step 2: " + serviceId);
@@ -112,7 +114,6 @@ fastify.get("/", function(request, reply) {
       }
     })();
   }
-  console.log("lol " + arr[0]);
   reply.view("/src/pages/index.hbs", arr[0]);
 });
 
