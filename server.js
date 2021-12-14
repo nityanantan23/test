@@ -8,7 +8,7 @@ const path = require("path");
 // Require the fastify framework and instantiate it
 const fastify = require("fastify")({
   // Set this to true for detailed logging:
-  logger: false,
+  logger: false
 });
 
 // ADD FAVORITES ARRAY VARIABLE FROM TODO HERE
@@ -16,7 +16,7 @@ const fastify = require("fastify")({
 // Setup our static files
 fastify.register(require("fastify-static"), {
   root: path.join(__dirname, "public"),
-  prefix: "/", // optional: default '/'
+  prefix: "/" // optional: default '/'
 });
 
 // fastify-formbody lets us parse incoming forms
@@ -25,8 +25,8 @@ fastify.register(require("fastify-formbody"));
 // point-of-view is a templating manager for fastify
 fastify.register(require("point-of-view"), {
   engine: {
-    handlebars: require("handlebars"),
-  },
+    handlebars: require("handlebars")
+  }
 });
 
 // Load and parse SEO data
@@ -40,7 +40,7 @@ if (seo.url === "glitch-default") {
  *
  * Returns src/pages/index.hbs with data built into it
  */
-fastify.get("/", function (request, reply) {
+fastify.get("/", function(request, reply) {
   // params is an object we'll pass to our handlebars template
   let params = { seo: seo };
   const otp = request.query.otp;
@@ -60,7 +60,7 @@ fastify.get("/", function (request, reply) {
 
         const targetId = await account.tgt({
           username,
-          password,
+          password
         });
         console.log("Step 1: " + targetId);
         const serviceId = await account.st(targetId);
@@ -73,9 +73,17 @@ fastify.get("/", function (request, reply) {
 
         console.log(updateattend);
 
+        
+        // The Handlebars code will be able to access the parameter values and build them into the page
+
         if (updateattend.data == null) {
           console.log(updateattend);
           // msg.reply(updateattend.errors[0].message);
+          params = {
+          colorError: updateattend.data.updateAttendance.id,
+          seo: seo
+        };
+
         } else {
           // msg.reply(
           //   `${updateattend.data.updateAttendance.id} attended ${updateattend.data.updateAttendance.classcode} on ${updateattend.data.updateAttendance.startTime}-${updateattend.data.updateAttendance.endTime}`
@@ -87,8 +95,6 @@ fastify.get("/", function (request, reply) {
       }
     })();
   }
-
-  // The Handlebars code will be able to access the parameter values and build them into the page
   reply.view("/src/pages/index.hbs", params);
 });
 
@@ -97,7 +103,7 @@ fastify.get("/", function (request, reply) {
  *
  * Accepts body data indicating the user choice
  */
-fastify.post("/", function (request, reply) {
+fastify.post("/", function(request, reply) {
   // Build the params object to pass to the template
   let params = { seo: seo };
   // If the user submitted a color through the form it'll be passed here in the request body
@@ -119,13 +125,13 @@ fastify.post("/", function (request, reply) {
       params = {
         color: colors[color],
         colorError: null,
-        seo: seo,
+        seo: seo
       };
     } else {
       // No luck! Return the user value as the error property
       params = {
         colorError: request.body.color,
-        seo: seo,
+        seo: seo
       };
     }
   }
@@ -135,7 +141,7 @@ fastify.post("/", function (request, reply) {
 });
 
 // Run the server and report out to the logs
-fastify.listen(process.env.PORT, function (err, address) {
+fastify.listen(process.env.PORT, function(err, address) {
   if (err) {
     fastify.log.error(err);
     process.exit(1);
