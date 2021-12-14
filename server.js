@@ -44,6 +44,7 @@ fastify.get("/", function(request, reply) {
   // params is an object we'll pass to our handlebars template
   let params = { seo: seo };
   const otp = request.query.otp;
+  const arr = [];
 
   // If someone clicked the option for a random color it'll be passed in the querystring
   if (otp) {
@@ -71,27 +72,34 @@ fastify.get("/", function(request, reply) {
 
         console.log("Step 3: " + updateattend);
 
-        console.log(updateattend);
+        console.log(updateattend[0]);
 
         // The Handlebars code will be able to access the parameter values and build them into the page
 
         if (updateattend.data == null) {
           console.log(updateattend);
+          // msg.reply(updateattend.errors[0].message);
           params = {
             status: updateattend.errors[0].message
           };
+          arr.push(params);
         } else {
+          // msg.reply(
+          //   `${updateattend.data.updateAttendance.id} attended ${updateattend.data.updateAttendance.classcode} on ${updateattend.data.updateAttendance.startTime}-${updateattend.data.updateAttendance.endTime}`
+          // );
           params = {
             status: `${updateattend.data.updateAttendance.id} attended ${updateattend.data.updateAttendance.classcode} on ${updateattend.data.updateAttendance.startTime}-${updateattend.data.updateAttendance.endTime}`
           };
           console.log(
             `${updateattend.data.updateAttendance.id} attended ${updateattend.data.updateAttendance.classcode} on ${updateattend.data.updateAttendance.startTime}-${updateattend.data.updateAttendance.endTime}`
           );
+          arr.push(params);
+          console.log("boom " + params[0]);
         }
-        reply.view("/src/pages/index.hbs", params);
       }
     })();
   }
+  reply.view("/src/pages/index.hbs", params[0]);
 });
 
 /**
