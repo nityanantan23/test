@@ -45,7 +45,8 @@ fastify.get("/", function(request, reply) {
   
   // params is an object we'll pass to our handlebars template
   let params = { seo: seo };
-  
+  const name = request.query.otp
+
   // If someone clicked the option for a random color it'll be passed in the querystring
   if (request.query.randomize) {
     
@@ -75,7 +76,6 @@ fastify.post("/", function(request, reply) {
   
   // Build the params object to pass to the template
   let params = { seo: seo };
-  
   // If the user submitted a color through the form it'll be passed here in the request body
   let color = request.body.color;
   
