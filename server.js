@@ -73,29 +73,25 @@ fastify.get("/", function(request, reply) {
 
         console.log(updateattend);
 
-        
         // The Handlebars code will be able to access the parameter values and build them into the page
 
         if (updateattend.data == null) {
           console.log(updateattend);
-          // msg.reply(updateattend.errors[0].message);
           params = {
-          colorError: updateattend.data.updateAttendance.id,
-          seo: seo
-        };
-
+            status: updateattend.errors[0].message
+          };
         } else {
-          // msg.reply(
-          //   `${updateattend.data.updateAttendance.id} attended ${updateattend.data.updateAttendance.classcode} on ${updateattend.data.updateAttendance.startTime}-${updateattend.data.updateAttendance.endTime}`
-          // );
+          params = {
+            status: `${updateattend.data.updateAttendance.id} attended ${updateattend.data.updateAttendance.classcode} on ${updateattend.data.updateAttendance.startTime}-${updateattend.data.updateAttendance.endTime}`
+          };
           console.log(
             `${updateattend.data.updateAttendance.id} attended ${updateattend.data.updateAttendance.classcode} on ${updateattend.data.updateAttendance.startTime}-${updateattend.data.updateAttendance.endTime}`
           );
         }
+        reply.view("/src/pages/index.hbs", params);
       }
     })();
   }
-  reply.view("/src/pages/index.hbs", params);
 });
 
 /**

@@ -12,7 +12,7 @@
     <link rel="icon" href="https://glitch.com/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{{otp}}</title>
+    <title>{{status}}</title>
     
     <!-- Meta tags for SEO and social sharing -->
     <link rel="canonical" href="{{seo.url}}">
@@ -44,6 +44,12 @@
         
         <!-- This is the start of content for our page -->
         <h1 class="title">Hello Node!</h1>
+        
+         {{#if status}}
+          <p class="color-info">
+            Now available in <b>{{status}}</b>!
+          </p>
+        {{/if}}  
         
         <!-- Add text indicating that we've changed color OR had an error -->
         {{#if color}}
