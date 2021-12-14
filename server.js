@@ -60,16 +60,24 @@ fastify.get("/", function(request, reply) {
 
       for (let i = 0; i < credentials.length; i++) {
         const { username, password } = credentials[i];
-        var encryptedAES = CryptoJS.AES.encrypt(password, process.env.SECRET);
-        console.log(encryptedAES);
-        var decryptedBytes = CryptoJS.AES.decrypt(
-          encryptedAES,
+        // var encryptedAES = CryptoJS.AES.encrypt(username, process.env.SECRET);
+        // console.log(encryptedAES.toString());
+        const decryptedPassword = CryptoJS.AES.decrypt(
+          password,
           process.env.SECRET
         );
-        var plaintext = decryptedBytes.toString(CryptoJS.enc.Utf8);
-        const targetId = await account.tgt({
+        const plainPassword = decryptedPassword.toString(CryptoJS.enc.Utf8);
+        console.log(plainPassword)
+        const decryptedUsername = CryptoJS.AES.decrypt(
           username,
-          password
+          process.env.SECRET
+        );
+        const plainUsername = decryptedUsername.toString(CryptoJS.enc.Utf8);
+        console.log(plainUsername)
+
+        const targetId = await account.tgt({
+          plainUsername,
+          plainPassword
         });
         console.log("Step 1: " + targetId);
         const serviceId = await account.st(targetId);
